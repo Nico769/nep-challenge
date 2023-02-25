@@ -25,3 +25,13 @@ class ResourceAPIView(views.APIView):
             return Response(to_retrieve_ser.data)
         except Resource.DoesNotExist:
             return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+    def delete(self, request, id):
+        # Silence pylint false positive check against the resource identifier
+        # pylint: disable=redefined-builtin
+        try:
+            to_delete = Resource.objects.get(pk=id)
+            to_delete.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Resource.DoesNotExist:
+            return Response(status=status.HTTP_204_NO_CONTENT)
