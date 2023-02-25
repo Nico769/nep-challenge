@@ -7,6 +7,10 @@
     "python.formatting.provider": "black",
     "python.linting.lintOnSave": true,
     "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--load-plugins=pylint_django",
+        "--django-settings-module=nepchallenge.settings",
+    ],
     "isort.args": [
         "--profile",
         "black",
