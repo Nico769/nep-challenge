@@ -17,6 +17,8 @@ class ResourceAPIView(views.APIView):
         return self.serializer_class(*args, **kwargs)
 
     def get(self, request, id):
+        # Silence pylint false positive check against the resource identifier
+        # pylint: disable=redefined-builtin
         try:
             to_retrieve = Resource.objects.get(pk=id)
             to_retrieve_ser = ResourceSerializer(to_retrieve)
