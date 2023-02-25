@@ -21,8 +21,8 @@ class ResourceAPIView(views.APIView):
         # pylint: disable=redefined-builtin
         try:
             to_retrieve = Resource.objects.get(pk=id)
-            to_retrieve_ser = ResourceSerializer(to_retrieve)
-            return Response(to_retrieve_ser.data)
+            serializer = ResourceSerializer(to_retrieve)
+            return Response(serializer.data)
         except Resource.DoesNotExist:
             return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -35,6 +35,13 @@ class ResourceAPIView(views.APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except Resource.DoesNotExist:
             return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def post(self, request):
+        serializer = ResourceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, id):
         # Silence pylint false positive check against the resource identifier
