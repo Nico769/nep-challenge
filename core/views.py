@@ -1,3 +1,25 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from rest_framework import status, views
+from rest_framework.response import Response
 
-# Create your views here.
+from .models import Resource
+from .serializers import ResourceSerializer
+
+
+class ResourceAPIView(views.APIView):
+    serializer_class = ResourceSerializer
+
+    def get_serializer_context(self):
+        return {"request": self.request, "format": self.format_kwarg, "view": self}
+
+    def get_serializer(self, *args, **kwargs):
+        kwargs["context"] = self.get_serializer_context()
+        return self.serializer_class(*args, **kwargs)
+
+    def get(self, request, id):
+        try:
+            to_retrieve = Resource.objects.get(pk=id)
+            to_retrieve_ser = ResourceSerializer(to_retrieve)
+            return Response(to_retrieve_ser.data)
+        except Resource.DoesNotExist:
+            return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
