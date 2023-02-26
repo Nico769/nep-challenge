@@ -1,0 +1,22 @@
+[
+  {
+    "model": "core.resource",
+    "pk": "5365549d-50da-4397-a391-6970ee8ecc5a",
+    "fields": {
+      "title": "A resource",
+      "content": "The content of a resource",
+      "owner": 2,
+      "container_node": 1
+    }
+  },
+  {
+    "model": "core.resource",
+    "pk": "03424f2b-495f-4748-b1e3-82c5003866c2",
+    "fields": {
+      "title": "Another resource",
+      "content": "No content",
+      "owner": 2,
+      "container_node": 1
+    }
+  }
+]

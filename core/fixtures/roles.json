@@ -1,0 +1,16 @@
+[
+    {
+        "model": "core.role",
+        "pk": "1",
+        "fields": {
+            "name": "RESPONSABILE"
+        }
+    },
+    {
+        "model": "core.role",
+        "pk": "2",
+        "fields": {
+            "name": "OPERATORE"
+        }
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "model": "core.node",
+        "pk": "1",
+        "fields": {
+            "title": "root",
+            "lft": 1,
+            "rght": 2,
+            "tree_id": 1,
+            "level": 0,
+            "owner": 2
+        }
+    }
+]
