@@ -2,19 +2,12 @@ from django.http import JsonResponse
 from rest_framework import status, views
 from rest_framework.response import Response
 
-from .models import Resource
-from .serializers import ResourceSerializer
+from .models import Node, Resource
+from .serializers import NodeSerializer, ResourceSerializer
 
 
 class ResourceAPIView(views.APIView):
     serializer_class = ResourceSerializer
-
-    def get_serializer_context(self):
-        return {"request": self.request, "format": self.format_kwarg, "view": self}
-
-    def get_serializer(self, *args, **kwargs):
-        kwargs["context"] = self.get_serializer_context()
-        return self.serializer_class(*args, **kwargs)
 
     def get(self, request, id):
         # Silence pylint false positive check against the resource identifier
@@ -55,3 +48,24 @@ class ResourceAPIView(views.APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Resource.DoesNotExist:
             return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class NodeAPIView(views.APIView):
+    serializer_class = NodeSerializer
+
+    def get(self, request, id):
+        # Silence pylint false positive check against the resource identifier
+        # pylint: disable=redefined-builtin
+        try:
+            to_retrieve = Node.objects.get(pk=id)
+            serializer = NodeSerializer(to_retrieve)
+            return Response(serializer.data)
+        except Resource.DoesNotExist:
+            return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+    def post(self, request, id=None):
+        serializer = NodeSerializer(data=request.data, context={"parentNodeId": id})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
