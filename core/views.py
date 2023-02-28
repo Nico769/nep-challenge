@@ -63,6 +63,28 @@ class NodeAPIView(views.APIView):
         except Resource.DoesNotExist:
             return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
 
+    def delete(self, request, id):
+        # Silence pylint false positive check against the resource identifier
+        # pylint: disable=redefined-builtin
+        try:
+            to_delete = Node.objects.get(pk=id)
+            # TODO Not sure why a Node that is about to be deleted somehow still references a previously deleted Resource.
+            #      Therefore, we hit the if statement below even when we try to delete a Node that has no associated resources in the database
+            if to_delete.resources:
+                return Response(
+                    {"reason": "A node cannot be deleted because it has one or more associated resources"},
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+            if not to_delete.is_child_node():
+                return Response(
+                    {"reason": "A node cannot be deleted because it has one or more children"},
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                )
+            to_delete.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Resource.DoesNotExist:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
     def post(self, request, id=None):
         serializer = NodeSerializer(data=request.data, context={"parentNodeId": id})
         if serializer.is_valid():
