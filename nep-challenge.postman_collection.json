@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "6097d69e-f7ff-4fd4-b346-fb721b2ddea8",
+		"name": "nep-challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14628705"
+	},
+	"item": [
+		{
+			"name": "Resources",
+			"item": [
+				{
+					"name": "Create a resource",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"a title\",\n    \"content\": \"a content\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/resources/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"resources",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a given resource by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/resources/{{resourceUuid}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"resources",
+								"{{resourceUuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a given resource by title and content",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"updated title\",\n    \"content\": \"no content this time\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/resources/{{resourceUuid}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"resources",
+								"{{resourceUuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a given resource by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/resources/{{resourceUuid}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"resources",
+								"{{resourceUuid}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nodes",
+			"item": [
+				{
+					"name": "Create a root node",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"a root node\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/nodes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"nodes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a child node",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"a child node\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/nodes/{{childId}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"nodes",
+								"{{childId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a given node by id along with its resources and children",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/nodes/{{nodeId}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"nodes",
+								"{{nodeId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a given node by title",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"updated node title\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/nodes/{{nodeId}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"nodes",
+								"{{nodeId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a given node by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/nodes/{{nodeId}}/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"nodes",
+								"{{nodeId}}",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
