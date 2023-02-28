@@ -69,3 +69,16 @@ class NodeAPIView(views.APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, id):
+        # Silence pylint false positive check against the resource identifier
+        # pylint: disable=redefined-builtin
+        try:
+            to_modify = Node.objects.get(pk=id)
+            serializer = NodeSerializer(to_modify, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Resource.DoesNotExist:
+            return JsonResponse({"reason": "The resource does not exist"}, status=status.HTTP_404_NOT_FOUND)
